@@ -17,7 +17,36 @@ router.get('/seeds', (req, res) => {
       });
 })
 
+router.get('', (req, res) => {
+    db.Workout.find({}).then((workouts) => {
+        res.json(workouts);
+    }).catch((err) => {
+        console.log(err);
+    })
+});
+router.get('/range', (req, res) => {
+    console.log('this is the range request');
+});
 
+router.put('/:id', async (req, res) => {
+    const id = req.params.id;
+    const newExercise = req.body;
+    console.log(newExercise);
+    await db.Workout.findOneAndUpdate({'_id': id}, {'$addToSet': {'exercises': newExercise}}).catch((err) => {console.log(err)});
+    res.json('Completed.');
+    
+    
+});
+
+
+router.post('', (req, res) => {
+    console.log(req.body);
+    db.Workout.find({}).then((workouts) => {
+        res.json(workouts);
+    }).catch((err) => {
+        console.log(err);
+    })
+});
 
 
 module.exports = router;
