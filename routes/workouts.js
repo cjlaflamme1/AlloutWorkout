@@ -26,6 +26,11 @@ router.get('', (req, res) => {
 });
 router.get('/range', (req, res) => {
     console.log('this is the range request');
+    db.Workout.find({}).then((workouts) => {
+        res.json(workouts);
+    }).catch((err) => {
+        console.log(err);
+    })
 });
 
 router.put('/:id', async (req, res) => {
