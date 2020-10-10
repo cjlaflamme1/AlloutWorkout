@@ -37,7 +37,11 @@ router.put('/:id', async (req, res) => {
     const id = req.params.id;
     const newExercise = req.body;
     console.log(newExercise);
-    await db.Workout.findOneAndUpdate({'_id': id}, {'$addToSet': {'exercises': newExercise}}).catch((err) => {console.log(err)});
+    if(id !== "undefined"){
+        await db.Workout.findOneAndUpdate({'_id': id}, {'$addToSet': {'exercises': newExercise}}).catch((err) => {console.log(err)});
+    } else {
+        await db.Workout.create({'exercises': newExercise}).catch((err) => {console.log(err)});
+    }
     res.json('Completed.');
     
     
